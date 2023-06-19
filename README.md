@@ -4,7 +4,10 @@
 git clone https://github.com/nivin-studio/gonivinck.git
 ```
 [带你十天轻松搞定 Go 微服务系列](https://zhuanlan.zhihu.com/p/468526364)
+
 [github](https://github.com/nivin-studio/go-zero-mall)
+
+https://www.cnblogs.com/kedarui/p/3987656.html
 ## 使用
 ### 1. 按需修改 .env 配置
 ~~~env
