@@ -1,7 +1,10 @@
 # gonivinck
 一个基于 `docker` 的 `go-zero` 本地开发运行环境。
-
-
+```shell
+git clone https://github.com/nivin-studio/gonivinck.git
+```
+[带你十天轻松搞定 Go 微服务系列](https://zhuanlan.zhihu.com/p/468526364)
+[github](https://github.com/nivin-studio/go-zero-mall)
 ## 使用
 ### 1. 按需修改 .env 配置
 ~~~env
