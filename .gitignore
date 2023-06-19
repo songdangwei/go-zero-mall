@@ -1,4 +1,4 @@
-code
 data
 logs
 node_modules
+*.xml
