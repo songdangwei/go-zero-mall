@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"google.golang.org/grpc/status"
+	"mall/service/product/model"
 
 	"mall/service/product/rpc/internal/svc"
 	"mall/service/product/rpc/product"
@@ -24,7 +26,25 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(in *product.CreateRequest) (*product.CreateResponse, error) {
-	// todo: add your logic here and delete this line
+	newProduct := model.Product{
+		Name:   in.Name,
+		Desc:   in.Desc,
+		Stock:  in.Stock,
+		Amount: in.Amount,
+		Status: in.Status,
+	}
 
-	return &product.CreateResponse{}, nil
+	res, err := l.svcCtx.ProductModel.Insert(l.ctx, &newProduct)
+	if err != nil {
+		return nil, status.Error(500, err.Error())
+	}
+
+	newProduct.Id, err = res.LastInsertId()
+	if err != nil {
+		return nil, status.Error(500, err.Error())
+	}
+
+	return &product.CreateResponse{
+		Id: newProduct.Id,
+	}, nil
 }

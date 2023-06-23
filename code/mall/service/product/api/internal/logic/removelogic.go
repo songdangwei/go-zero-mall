@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"mall/service/product/rpc/product"
 
 	"mall/service/product/api/internal/svc"
 	"mall/service/product/api/internal/types"
@@ -24,7 +25,12 @@ func NewRemoveLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RemoveLogi
 }
 
 func (l *RemoveLogic) Remove(req *types.RemoveRequest) (resp *types.RemoveResponse, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.ProductRpc.Remove(l.ctx, &product.RemoveRequest{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.RemoveResponse{}, nil
 }

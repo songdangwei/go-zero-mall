@@ -2,7 +2,7 @@ FROM golang:1.18
 
 LABEL maintainer="Ving <ving@nivin.cn>"
 
-ENV GOPROXY https://goproxy.cn,direct
+#ENV GOPROXY https://goproxy.cn,direct
 
 # 安装必要的软件包和依赖包
 USER root
@@ -21,7 +21,8 @@ RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.lis
 
 # 安装 goctl
 USER root
-RUN GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
+ #GOPROXY=https://goproxy.cn/,direct
+RUN  go install github.com/zeromicro/go-zero/tools/goctl@latest
 
 # 安装 protoc
 USER root

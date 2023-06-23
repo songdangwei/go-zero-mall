@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"mall/service/product/rpc/product"
 
 	"mall/service/product/api/internal/svc"
 	"mall/service/product/api/internal/types"
@@ -24,7 +25,17 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogi
 }
 
 func (l *UpdateLogic) Update(req *types.UpdateRequest) (resp *types.UpdateResponse, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.ProductRpc.Update(l.ctx, &product.UpdateRequest{
+		Id:     req.Id,
+		Name:   req.Name,
+		Desc:   req.Desc,
+		Stock:  req.Stock,
+		Amount: req.Amount,
+		Status: req.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.UpdateResponse{}, nil
 }
