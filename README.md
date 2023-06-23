@@ -8,6 +8,8 @@ git clone https://github.com/nivin-studio/gonivinck.git
 [github](https://github.com/nivin-studio/go-zero-mall)
 
 https://www.cnblogs.com/kedarui/p/3987656.html
+
+go mod的golang版本要与docker中的golang版本保持一致
 ## 使用
 ### 1. 按需修改 .env 配置
 ~~~env

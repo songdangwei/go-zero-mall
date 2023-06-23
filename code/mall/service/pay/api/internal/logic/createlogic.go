@@ -2,10 +2,9 @@ package logic
 
 import (
 	"context"
-	"mall/service/order/rpc/orderclient"
 
-	"mall/service/order/api/internal/svc"
-	"mall/service/order/api/internal/types"
+	"mall/service/pay/api/internal/svc"
+	"mall/service/pay/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -25,17 +24,7 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateResponse, err error) {
-	res, err := l.svcCtx.OrderRpc.Create(l.ctx, &orderclient.CreateRequest{
-		Uid:    req.Uid,
-		Pid:    req.Pid,
-		Amount: req.Amount,
-		Status: req.Status,
-	})
-	if err != nil {
-		return nil, err
-	}
+	// todo: add your logic here and delete this line
 
-	return &types.CreateResponse{
-		Id: res.Id,
-	}, nil
+	return
 }
