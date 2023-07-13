@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"mall/service/pay/rpc/pay"
 
 	"mall/service/pay/api/internal/svc"
 	"mall/service/pay/api/internal/types"
@@ -24,7 +25,18 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 }
 
 func (l *DetailLogic) Detail(req *types.DetailRequest) (resp *types.DetailResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.PayRpc.Detail(l.ctx, &pay.DetailRequest{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.DetailResponse{
+		Id:     res.Id,
+		Uid:    res.Uid,
+		Oid:    res.Oid,
+		Amount: res.Amount,
+		Source: res.Amount,
+		Status: res.Status,
+	}, nil
 }

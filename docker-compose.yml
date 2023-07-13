@@ -15,7 +15,7 @@ services:
     volumes:                             # 设置挂载目录
       - ${CODE_PATH_HOST}:/usr/src/code  # 引用 .env 配置中 CODE_PATH_HOST 变量，将宿主机上代码存放的目录挂载到容器中 /usr/src/code 目录
     ports:                               # 设置端口映射
-      - "8000:8000"
+      - "8100:8000"
       - "8001:8001"
       - "8002:8002"
       - "8003:8003"
@@ -58,6 +58,8 @@ services:
     networks:
       - backend
     restart: always
+#    # mac下需要这个配置指定平台。win不需要
+    platform: linux/amd64
 
   redis:
     build:

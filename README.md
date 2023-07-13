@@ -10,6 +10,13 @@ git clone https://github.com/nivin-studio/gonivinck.git
 https://www.cnblogs.com/kedarui/p/3987656.html
 
 go mod的golang版本要与docker中的golang版本保持一致
+
+docker-compose.yml有mysql平台的问题(具体可查看dockerhub。)这里使用的5.7注意查看mysql配置
+
+### 清空docker配置
+```sh
+rm -rf ~/.docker/config.json 
+```
 ## 使用
 ### 1. 按需修改 .env 配置
 ~~~env
@@ -79,8 +86,8 @@ GRAFANA_PORT=4000
 
 
 # JAEGER #########################################
-# Jaeger 服务映射宿主机端口号，可在宿主机127.0.0.1:5000访问
-JAEGER_PORT=5000
+# Jaeger 服务映射宿主机端口号，可在宿主机127.0.0.1:5100访问
+JAEGER_PORT=5100
 
 
 # DTM #########################################
@@ -105,3 +112,5 @@ docker-compose up -d etcd golang mysql redis
 ~~~bash
 docker exec -it gonivinck_golang_1 bash
 ~~~
+
+
