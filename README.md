@@ -15,7 +15,7 @@ https://www.cnblogs.com/kedarui/p/3987656.html
 
 3. 订单status，9为失效订单
 4. dtm 有版本兼容问题。这里的写法不兼容最新版本
-5. auth认证未实现
+5. auth认证需要用户先登陆获取token，携带token。订单创建和用户登陆加入auth认证
 ### 清空docker配置
 ```sh
 rm -rf ~/.docker/config.json 

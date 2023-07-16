@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"github.com/zeromicro/go-zero/core/logc"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -19,8 +18,6 @@ func CreateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewCreateLogic(r.Context(), svcCtx)
-		logc.Info(r.Context(), &req, "111")
-		logc.Info(r.Context(), svcCtx.Config.Auth.AccessSecret, "222")
 
 		resp, err := l.Create(&req)
 		if err != nil {

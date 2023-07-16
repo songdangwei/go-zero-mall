@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"github.com/dtm-labs/dtmgrpc"
+	"github.com/zeromicro/go-zero/core/logc"
 	"google.golang.org/grpc/status"
 	"mall/service/order/api/internal/svc"
 	"mall/service/order/api/internal/types"
@@ -69,12 +70,13 @@ func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateRespon
 			Id:  req.Pid,
 			Num: 1,
 		})
-
+	saga.WaitResult = true
 	// 事务提交
 	err = saga.Submit()
 	if err != nil {
 		return nil, status.Error(500, err.Error())
 	}
 
+	logc.Info(l.ctx, " : ", saga.Context, "+++++++++++++++++++++", saga, "================", saga.TransOptions)
 	return &types.CreateResponse{}, nil
 }

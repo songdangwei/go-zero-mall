@@ -5,11 +5,13 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/dtm-labs/dtmgrpc"
+	"github.com/zeromicro/go-zero/core/logc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"google.golang.org/grpc/status"
 	"mall/service/order/model"
 	"mall/service/order/rpc/internal/svc"
 	"mall/service/order/rpc/order"
+	"mall/service/product/rpc/product"
 	"mall/service/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -30,28 +32,24 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(in *order.CreateRequest) (*order.CreateResponse, error) {
-	/*	不用dtm的逻辑
-		// 查询用户是否存在
-		_, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &user.UserInfoRequest{
-			Id: in.Uid,
-		})
-		if err != nil {
-			return nil, err
-		}
+	//不用dtm的逻辑
+	// 查询用户是否存在
+	_, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &user.UserInfoRequest{
+		Id: in.Uid,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-		// 查询产品是否存在
-		productRes, err := l.svcCtx.ProductRpc.Detail(l.ctx, &product.DetailRequest{
-			Id: in.Pid,
-		})
-		if err != nil {
-			return nil, err
-		}
-		// 判断产品库存是否充足
-		if productRes.Stock <= 0 {
-			return nil, status.Error(500, "产品库存不足")
-		}
+	// 查询产品是否存在
+	productRes, err := l.svcCtx.ProductRpc.Detail(l.ctx, &product.DetailRequest{
+		Id: in.Pid,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-		newOrder := model.Order{
+	/*	newOrder := model.Order{
 			Uid:    in.Uid,
 			Pid:    in.Pid,
 			Amount: in.Amount,
@@ -94,14 +92,14 @@ func (l *CreateLogic) Create(in *order.CreateRequest) (*order.CreateResponse, er
 	if err != nil {
 		return nil, status.Error(500, err.Error())
 	}
+
+	var Id int64
 	// 开启子事务屏障
-	if err := barrier.CallWithDB(db, func(tx *sql.Tx) error {
-		// 查询用户是否存在
-		_, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &user.UserInfoRequest{
-			Id: in.Uid,
-		})
-		if err != nil {
-			return fmt.Errorf("用户不存在")
+	if err = barrier.CallWithDB(db, func(tx *sql.Tx) error {
+
+		// 判断产品库存是否充足
+		if productRes.Stock <= 0 {
+			return status.Error(500, "产品库存不足")
 		}
 
 		newOrder := model.Order{
@@ -111,15 +109,20 @@ func (l *CreateLogic) Create(in *order.CreateRequest) (*order.CreateResponse, er
 			Status: 0,
 		}
 		// 创建订单
-		_, err = l.svcCtx.OrderModel.TxInsert(tx, &newOrder)
+		res, err := l.svcCtx.OrderModel.TxInsert(tx, &newOrder)
 		if err != nil {
 			return fmt.Errorf("订单创建失败")
+		}
+
+		Id, err = res.LastInsertId()
+		if err != nil {
+			return status.Error(500, err.Error())
 		}
 
 		return nil
 	}); err != nil {
 		return nil, status.Error(500, err.Error())
 	}
-
-	return &order.CreateResponse{}, nil
+	logc.Info(l.ctx, Id, "________________________________")
+	return &order.CreateResponse{Id: Id}, nil
 }

@@ -14,8 +14,8 @@ Auth:
   AccessExpire: 86400
 
 UserRpc:
-#  App: userapi
-#  Token: 6jKNZbEpYGeUMAifz10gOnmoty3TV
+  App: userapi
+  Token: 6jKNZbEpYGeUMAifz10gOnmoty3TV
   Etcd:
     Hosts:
       - etcd:2379

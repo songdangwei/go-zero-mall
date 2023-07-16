@@ -16,8 +16,8 @@ CacheRedis:
 Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe
 
 
-#Auth: true
-#StrictControl: true
+Auth: true
+StrictControl: true
 Redis:
   Key: rpc:auth:user
   Host: redis:6379
