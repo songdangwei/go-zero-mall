@@ -9,10 +9,13 @@ git clone https://github.com/nivin-studio/gonivinck.git
 
 https://www.cnblogs.com/kedarui/p/3987656.html
 
-go mod的golang版本要与docker中的golang版本保持一致
+1. go mod的golang版本要与docker中的golang版本保持一致
 
-docker-compose.yml有mysql平台的问题(具体可查看dockerhub。)这里使用的5.7注意查看mysql配置
+2. docker-compose.yml有mysql平台的问题(具体可查看dockerhub。)这里使用的5.7注意查看mysql配置
 
+3. 订单status，9为失效订单
+4. dtm 有版本兼容问题。这里的写法不兼容最新版本
+5. auth认证未实现
 ### 清空docker配置
 ```sh
 rm -rf ~/.docker/config.json 
@@ -91,6 +94,7 @@ JAEGER_PORT=5100
 
 
 # DTM #########################################
+# [GO语言分布式事务管理服务](https://www.dtm.pub/)
 # DTM HTTP 协议端口号
 DTM_HTTP_PORT=36789
 # DTM gRPC 协议端口号

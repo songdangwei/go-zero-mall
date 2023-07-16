@@ -16,11 +16,22 @@ CacheRedis:
 Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe
 
 
+#Auth: true
+#StrictControl: true
+Redis:
+  Key: rpc:auth:user
+  Host: redis:6379
+  Type: node
 
-UserRpc:
-  Etcd:
-    Hosts:
-      - etcd:2379
-    Key: user.rpc
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9090
+  Path: /metrics
+
+Telemetry:
+  Name: user.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
 
 

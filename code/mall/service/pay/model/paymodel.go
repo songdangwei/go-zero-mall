@@ -11,7 +11,7 @@ import (
 var (
 	_ PayModel = (*customPayModel)(nil)
 
-	//cachePayIdPrefix = "cache:pay:id:"
+	//cachePayIdPrefix  = "cache:pay:id:"
 	cachePayOidPrefix = "cache:pay:oid:"
 )
 

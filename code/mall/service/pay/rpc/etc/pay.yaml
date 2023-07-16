@@ -2,7 +2,7 @@ Name: pay.rpc
 ListenOn: 0.0.0.0:9003
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - etcd:2379
   Key: pay.rpc
 
 Mysql:
@@ -23,3 +23,14 @@ OrderRpc:
     Hosts:
       - etcd:2379
     Key: order.rpc
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9093
+  Path: /metrics
+
+Telemetry:
+  Name: pay.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
